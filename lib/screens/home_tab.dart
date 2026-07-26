@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import '../utility/constant.dart';
+import '../models/transection_model.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
+
+  static final List<TransactionModel> _transactions = [
+    TransactionModel(id: '1', title: 'Netflix Subscription', category: 'Entertainment', emoji: '🎬', dateLabel: 'Today',      amount: 19.99,   isDebit: true,  date: DateTime.now()),
+    TransactionModel(id: '2', title: 'Coffee Shop',          category: 'Food & Drink',  emoji: '☕', dateLabel: 'Today',      amount: 4.50,    isDebit: true,  date: DateTime.now()),
+    TransactionModel(id: '3', title: 'Salary Deposit',       category: 'Income',        emoji: '💰', dateLabel: 'Yesterday',  amount: 3500.00, isDebit: false, date: DateTime.now()),
+    TransactionModel(id: '4', title: 'Grocery Store',        category: 'Shopping',      emoji: '🛒', dateLabel: 'Yesterday',  amount: 55.80,   isDebit: true,  date: DateTime.now()),
+    TransactionModel(id: '5', title: 'Amazon Purchase',      category: 'Shopping',      emoji: '🛒', dateLabel: '2 days ago', amount: 120.45,  isDebit: true,  date: DateTime.now()),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +28,10 @@ class HomeTab extends StatelessWidget {
               _buildBalanceCard(),
               const SizedBox(height: 20.00),
               _buildQuickActions(),
+              const SizedBox(height: 25.00),
+              _buildTransactionsHeader(),
+              const SizedBox(height: 10.00),
+              _buildTransactionsList(),
             ],
           ),
         ),
@@ -82,9 +95,7 @@ class HomeTab extends StatelessWidget {
                   color: Colors.white70, size: 22.00),
             ],
           ),
-
           const SizedBox(height: 10.00),
-
           Row(
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
@@ -101,11 +112,9 @@ class HomeTab extends StatelessWidget {
                       fontWeight: FontWeight.bold)),
             ],
           ),
-
           const SizedBox(height: 15.00),
           const Divider(color: Colors.white24, thickness: 1.00),
           const SizedBox(height: 10.00),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
@@ -126,9 +135,9 @@ class HomeTab extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildActionButton(Icons.swap_vert,        'Transfer'),
-        _buildActionButton(Icons.toll_outlined,    'Pay Bills'),
-        _buildActionButton(Icons.link,             'Invest'),
+        _buildActionButton(Icons.swap_vert,     'Transfer'),
+        _buildActionButton(Icons.toll_outlined, 'Pay Bills'),
+        _buildActionButton(Icons.link,          'Invest'),
       ],
     );
   }
@@ -155,11 +164,86 @@ class HomeTab extends StatelessWidget {
             child: Icon(icon, color: AppConstant.primaryColor, size: 26.00),
           ),
           const SizedBox(height: 10.00),
-          Text(label, style: const TextStyle(fontSize: 13.00, fontWeight: FontWeight.w500)),
+          Text(label,
+              style: const TextStyle(
+                  fontSize: 13.00, fontWeight: FontWeight.w500)),
         ],
       ),
     );
   }
 
+  Widget _buildTransactionsHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text('Recent Transactions',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.00)),
+        TextButton(onPressed: () {}, child: const Text('View All')),
+      ],
+    );
+  }
 
+  Widget _buildTransactionsList() {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: _transactions.length,
+      itemBuilder: (context, index) {
+        final TransactionModel t = _transactions[index];
+        return Container(
+          margin: const EdgeInsets.only(bottom: 8.00),
+          padding: const EdgeInsets.symmetric(
+              horizontal: 15.00, vertical: 12.00),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.00),
+          ),
+          child: Row(
+            children: [
+
+              Container(
+                width: 48.00,
+                height: 48.00,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(t.emoji,
+                      style: const TextStyle(fontSize: 22.00)),
+                ),
+              ),
+
+              const SizedBox(width: 12.00),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(t.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.00)),
+                    const SizedBox(height: 3.00),
+                    Text('${t.category} • ${t.dateLabel}',
+                        style: const TextStyle(
+                            color: Colors.grey, fontSize: 12.00)),
+                  ],
+                ),
+              ),
+
+              Text(
+                '${t.isDebit ? '' : '+'}\$${t.amount.toStringAsFixed(2)}',
+                style: TextStyle(
+                  color: t.isDebit ? Colors.red : Colors.green,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15.00,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
