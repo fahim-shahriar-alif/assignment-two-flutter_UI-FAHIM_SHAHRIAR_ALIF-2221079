@@ -17,6 +17,8 @@ class HomeTab extends StatelessWidget {
               _buildTopBar(),
               const SizedBox(height: 20.00),
               _buildBalanceCard(),
+              const SizedBox(height: 20.00),
+              _buildQuickActions(),
             ],
           ),
         ),
@@ -120,4 +122,44 @@ class HomeTab extends StatelessWidget {
       ),
     );
   }
+  Widget _buildQuickActions() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        _buildActionButton(Icons.swap_vert,        'Transfer'),
+        _buildActionButton(Icons.toll_outlined,    'Pay Bills'),
+        _buildActionButton(Icons.link,             'Invest'),
+      ],
+    );
+  }
+
+  Widget _buildActionButton(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.00, vertical: 15.00),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.00),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(18),
+            blurRadius: 12.00,
+            offset: const Offset(0.00, 4.00),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 28.00,
+            backgroundColor: AppConstant.primaryColor.withAlpha(30),
+            child: Icon(icon, color: AppConstant.primaryColor, size: 26.00),
+          ),
+          const SizedBox(height: 10.00),
+          Text(label, style: const TextStyle(fontSize: 13.00, fontWeight: FontWeight.w500)),
+        ],
+      ),
+    );
+  }
+
+
 }
