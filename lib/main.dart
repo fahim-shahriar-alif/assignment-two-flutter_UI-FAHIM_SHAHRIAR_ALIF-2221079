@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/main_screen.dart';  // add this import
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C63FF)),
       ),
-      home: const Scaffold(
-        body: Center(child: Text('App is working!')),
-      ),
+      home: const MainScreen(),  // ← changed from Scaffold to MainScreen
     );
   }
 }
