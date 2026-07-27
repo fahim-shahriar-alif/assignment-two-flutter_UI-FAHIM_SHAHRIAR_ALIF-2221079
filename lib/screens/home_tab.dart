@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utility/constant.dart';
 import '../models/transection_model.dart';
+import '../widgets/top_bar_widget.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -23,7 +24,7 @@ class HomeTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTopBar(),
+              const TopBarWidget(),
               const SizedBox(height: 20.00),
               _buildBalanceCard(),
               const SizedBox(height: 20.00),
@@ -39,41 +40,6 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildTopBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 22.00,
-              backgroundColor: AppConstant.primaryColor,
-              child: Text(
-                AppConstant.profilePicture,
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(width: 10.00),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Welcome back,',
-                    style: TextStyle(color: Colors.grey, fontSize: 12.00)),
-                Text(AppConstant.studentName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16.00)),
-              ],
-            ),
-          ],
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_outlined),
-        ),
-      ],
-    );
-  }
 
   Widget _buildBalanceCard() {
     return Container(
