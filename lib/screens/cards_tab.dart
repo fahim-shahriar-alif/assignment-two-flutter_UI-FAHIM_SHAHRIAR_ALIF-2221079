@@ -70,7 +70,7 @@ class CardsTab extends StatelessWidget {
 
           const SizedBox(height: 25.00),
 
-          const Text('4567  ****  ****  4545',
+          const Text('4567  ****  ****  1234',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20.00,
